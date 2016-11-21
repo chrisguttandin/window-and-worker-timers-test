@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Window &amp; Worker Timers test</title>
+    </head>
+    <body>
+        <h1>Window &amp; Worker Timers test</h1>
+        <button id="play-worker-timers">play with workerTimers</button>
+        <button id="play-window-timers">play with windowTimers</button>
+        <button id="stop">stop</button>
+        <script src="worker-timers.min.js"></script>
+        <script>
+            'use strict';
+
+            var waitForBuffer = new Promise(function (resolve, reject) {
+                var offlineAudioContext = new OfflineAudioContext(1, 22050, 44100);
+
+                var oscillatorNode = offlineAudioContext.createOscillator();
+
+                oscillatorNode.connect(offlineAudioContext.destination);
+                oscillatorNode.start();
+
+                offlineAudioContext
+                    .startRendering()
+                    .then((audioBuffer) => resolve(audioBuffer))
+                    .catch((err) => reject(err));
+            });
+
+            var audioContext = new AudioContext();
+
+            var $playWindowTimersButton = document.getElementById('play-window-timers');
+            var $playWorkerTimersButton = document.getElementById('play-worker-timers');
+            var $stopButton = document.getElementById('stop');
+
+            var intervalId = null;
+
+            function clearAnyInterval () {
+                workerTimers.clearInterval(intervalId);
+                clearInterval(intervalId);
+            }
+
+            function scheduleAudioBufferSourceNode (audioBuffer, when) {
+                var audioBufferSourceNode = audioContext.createBufferSource();
+
+                audioBufferSourceNode.buffer = audioBuffer;
+                audioBufferSourceNode.connect(audioContext.destination);
+
+                var offset = 0;
+
+                if (audioContext.currentTime > when) {
+                    offset = audioContext.currentTime - when;
+                    when = audioContext.currentTime;
+                }
+
+                audioBufferSourceNode.start(when, offset);
+
+                return audioBufferSourceNode;
+            }
+
+            $playWindowTimersButton.addEventListener('click', function () {
+                waitForBuffer
+                    .then((audioBuffer) => {
+                        var currentTime = audioContext.currentTime + 0.05;
+
+                        scheduleAudioBufferSourceNode(audioBuffer, currentTime);
+
+                        currentTime += 0.5;
+
+                        scheduleAudioBufferSourceNode(audioBuffer, currentTime);
+
+                        intervalId = setInterval(function () {
+                            currentTime += 0.5;
+
+                            scheduleAudioBufferSourceNode(audioBuffer, currentTime);
+                        }, 500);
+                    });
+            });
+
+            $playWorkerTimersButton.addEventListener('click', function () {
+                waitForBuffer
+                    .then((audioBuffer) => {
+                        var currentTime = audioContext.currentTime + 0.05;
+
+                        scheduleAudioBufferSourceNode(audioBuffer, currentTime);
+
+                        currentTime += 0.5;
+
+                        scheduleAudioBufferSourceNode(audioBuffer, currentTime);
+
+                        intervalId = workerTimers.setInterval(function () {
+                            currentTime += 0.5;
+
+                            scheduleAudioBufferSourceNode(audioBuffer, currentTime);
+                        }, 500);
+                    });
+            });
+
+            $stopButton.addEventListener('click', function () {
+                clearAnyInterval();
+            });
+        </script>
+    </body>
+</html>
