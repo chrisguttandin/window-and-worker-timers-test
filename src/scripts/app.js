@@ -26,7 +26,7 @@ function clearAnyInterval () {
         workerTimersIntervalId = null;
     }
 
-    if (windowTimersIntervalId) {
+    if (windowTimersIntervalId !== null) {
         clearInterval(windowTimersIntervalId);
         windowTimersIntervalId = null;
     }
