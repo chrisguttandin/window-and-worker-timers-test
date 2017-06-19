@@ -23,10 +23,12 @@ let workerTimersIntervalId = null;
 function clearAnyInterval () {
     if (workerTimersIntervalId !== null) {
         workerTimers.clearInterval(workerTimersIntervalId);
+        workerTimersIntervalId = null;
     }
 
     if (windowTimersIntervalId) {
         clearInterval(windowTimersIntervalId);
+        windowTimersIntervalId = null;
     }
 }
 
