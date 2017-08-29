@@ -39,13 +39,14 @@ function scheduleAudioBufferSourceNode (audioBuffer, when) {
     audioBufferSourceNode.connect(audioContext.destination);
 
     let offset = 0;
+    let startTime = when;
 
     if (audioContext.currentTime > when) {
         offset = audioContext.currentTime - when;
-        when = audioContext.currentTime;
+        startTime = audioContext.currentTime;
     }
 
-    audioBufferSourceNode.start(when, offset);
+    audioBufferSourceNode.start(startTime, offset);
 
     return audioBufferSourceNode;
 }
