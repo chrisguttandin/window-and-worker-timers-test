@@ -4,7 +4,7 @@
     "url": "https://github.com/chrisguttandin/window-and-worker-timers-test/issues"
   },
   "dependencies": {
-    "worker-timers": "^4.0.16"
+    "worker-timers": "^4.0.17"
   },
   "description": "A website to test various WindowTimers replacements.",
   "devDependencies": {
