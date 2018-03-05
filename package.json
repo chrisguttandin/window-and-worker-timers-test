@@ -3,6 +3,11 @@
   "bugs": {
     "url": "https://github.com/chrisguttandin/window-and-worker-timers-test/issues"
   },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "dependencies": {
     "worker-timers": "^4.0.23"
   },
