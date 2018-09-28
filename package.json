@@ -44,6 +44,12 @@
     "webpack": "^4.20.2"
   },
   "homepage": "https://chrisguttandin.github.io/window-and-worker-timers-test",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint --edit --extends @commitlint/config-angular",
+      "pre-commit": "grunt lint"
+    }
+  },
   "license": "MIT",
   "main": "src/index.html",
   "name": "window-and-worker-timers-test",
@@ -53,8 +59,6 @@
     "url": "https://github.com/chrisguttandin/window-and-worker-timers-test.git"
   },
   "scripts": {
-    "commitmsg": "commitlint --edit --extends @commitlint/config-angular",
-    "precommit": "grunt lint",
     "test": "grunt lint"
   },
   "version": "1.0.37"
