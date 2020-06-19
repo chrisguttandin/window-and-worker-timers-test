@@ -20,7 +20,7 @@ const $stopButton = document.getElementById('stop');
 let windowTimersIntervalId = null;
 let workerTimersIntervalId = null;
 
-function clearAnyInterval () {
+function clearAnyInterval() {
     if (workerTimersIntervalId !== null) {
         workerTimers.clearInterval(workerTimersIntervalId);
         workerTimersIntervalId = null;
@@ -32,7 +32,7 @@ function clearAnyInterval () {
     }
 }
 
-function scheduleAudioBufferSourceNode (audioBuffer, when) {
+function scheduleAudioBufferSourceNode(audioBuffer, when) {
     const audioBufferSourceNode = audioContext.createBufferSource();
 
     audioBufferSourceNode.buffer = audioBuffer;
@@ -54,43 +54,41 @@ function scheduleAudioBufferSourceNode (audioBuffer, when) {
 $playWindowTimersButton.addEventListener('click', function () {
     clearAnyInterval();
 
-    waitForBuffer
-        .then((audioBuffer) => {
-            let currentTime = audioContext.currentTime + 0.05;
+    waitForBuffer.then((audioBuffer) => {
+        let currentTime = audioContext.currentTime + 0.05;
 
-            scheduleAudioBufferSourceNode(audioBuffer, currentTime);
+        scheduleAudioBufferSourceNode(audioBuffer, currentTime);
 
+        currentTime += 0.5;
+
+        scheduleAudioBufferSourceNode(audioBuffer, currentTime);
+
+        windowTimersIntervalId = setInterval(function () {
             currentTime += 0.5;
 
             scheduleAudioBufferSourceNode(audioBuffer, currentTime);
-
-            windowTimersIntervalId = setInterval(function () {
-                currentTime += 0.5;
-
-                scheduleAudioBufferSourceNode(audioBuffer, currentTime);
-            }, 500);
-        });
+        }, 500);
+    });
 });
 
 $playWorkerTimersButton.addEventListener('click', function () {
     clearAnyInterval();
 
-    waitForBuffer
-        .then((audioBuffer) => {
-            let currentTime = audioContext.currentTime + 0.05;
+    waitForBuffer.then((audioBuffer) => {
+        let currentTime = audioContext.currentTime + 0.05;
 
-            scheduleAudioBufferSourceNode(audioBuffer, currentTime);
+        scheduleAudioBufferSourceNode(audioBuffer, currentTime);
 
+        currentTime += 0.5;
+
+        scheduleAudioBufferSourceNode(audioBuffer, currentTime);
+
+        workerTimersIntervalId = workerTimers.setInterval(function () {
             currentTime += 0.5;
 
             scheduleAudioBufferSourceNode(audioBuffer, currentTime);
-
-            workerTimersIntervalId = workerTimers.setInterval(function () {
-                currentTime += 0.5;
-
-                scheduleAudioBufferSourceNode(audioBuffer, currentTime);
-            }, 500);
-        });
+        }, 500);
+    });
 });
 
 $stopButton.addEventListener('click', function () {
