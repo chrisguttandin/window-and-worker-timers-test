@@ -9,7 +9,7 @@
         }
     },
     "dependencies": {
-        "worker-timers": "^7.0.37"
+        "worker-timers": "^7.0.39"
     },
     "description": "A website to test various WindowTimers replacements.",
     "devDependencies": {
