@@ -51,5 +51,5 @@
         "prepare": "husky install",
         "test": "npm run lint"
     },
-    "version": "1.0.133"
+    "version": "1.0.134"
 }
