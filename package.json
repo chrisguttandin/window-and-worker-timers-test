@@ -13,7 +13,7 @@
     },
     "description": "A website to test various WindowTimers replacements.",
     "devDependencies": {
-        "@babel/core": "^7.24.4",
+        "@babel/core": "^7.24.5",
         "@babel/preset-env": "^7.24.4",
         "@commitlint/cli": "^19.2.2",
         "@commitlint/config-angular": "^19.2.2",
